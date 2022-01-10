@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: 0 auto;
+  width: 1140px;
+}
+
+.MuiFormControl-root.MuiTextField-root {
+  flex-grow: 1;
+  background-color: white;
+}
+.MuiButton-root.MuiButton-contained {
+  margin: 0 10px;
+}

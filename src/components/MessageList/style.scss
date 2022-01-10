@@ -1,0 +1,19 @@
+.messenger {
+    flex-grow: 1;
+    overflow-y: auto;
+    &__chat-name {
+        position: absolute;
+        background-color: #1976d2;
+        color: white;
+        font-weight: lighter;
+        width: 480px;
+        padding: 10px;
+    }
+}
+.message-list {
+    padding-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}

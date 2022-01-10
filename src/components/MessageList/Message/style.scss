@@ -1,0 +1,47 @@
+.message {
+    display: flex;
+    max-width: 90%;
+
+    &__content {
+        padding: 10px;
+        margin: 5px;
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        min-width: 6    0px;
+    }
+    button {
+        background: none;
+        border: none;
+
+        margin-left: 5px;
+        align-self: center;
+    }
+
+    button:hover {
+        cursor: pointer;
+    }
+    &__text {
+        word-break: break-all;
+    }
+    &__author {
+        padding: 0 5px;
+
+        color: gray;
+        font-size: small;
+        display: flex;
+        align-items: center;
+    }
+
+    &_human {
+        align-self: start;
+    }
+
+    &_bot {
+        align-self: end;
+        
+        .message__author {
+            order: -1;
+        }
+    }
+}

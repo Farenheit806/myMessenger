@@ -1,0 +1,38 @@
+.vertical-form {
+    flex-direction: column;
+
+    margin: 10px 0 0 0;
+}
+  
+.vertical-form .MuiButton-root.MuiButton-contained {
+    margin-top: 5px;
+    width: 100%;
+}
+.chat-list {
+    overflow: auto;
+    flex-grow: 1;
+}  
+.chat-heading {
+    padding: 10px 0 0 0;
+}
+
+.App {
+    display: flex;
+  }
+
+  .MuiList-root.MuiList-padding {
+    position: absolute;
+    left: 0;
+    background-color: lightgray;
+    width: 200px;
+    padding: 0 10px 5vh 10px;
+    height: 91vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .MuiList-root.MuiList-padding li {
+    background-color: white;
+    margin-top: 10px;
+    padding: 0;
+  }
+  
