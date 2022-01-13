@@ -1,52 +1,43 @@
-import { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import MessageList from "../MessageList";
-import {Form} from "../Form";
-import { addMessageWithReply,deleteMessage } from '../../store/messages/actions';
-import { selectMessages } from '../../store/messages/selectors';
+import { Outlet } from 'react-router-dom';
+import { addChat, deleteChat} from '../../store/chats/actions';
 import { selectChats } from '../../store/chats/selectors';
-import { selectProfile } from '../../store/profile/selectors';
+import {ChatList} from './ChatList';
 
-import './style.scss';
+import "./style.scss";
 
-function Chats() {
-  const {chatId}=useParams();
-  const {userName} = useSelector(selectProfile);
-  const messages = useSelector(selectMessages);
-  const chats = useSelector(selectChats);
-  const dispatch = useDispatch();
-  const chatName = chats?.find(chat => chat.id === chatId)?.name
+function Chats () {
+    const chats = useSelector(selectChats);
+    const dispatch = useDispatch();
+    
+    const onAddChat = (newChatName) => {
+        var newId;
+        newChatName.indexOf(" ",[0]) !== -1 ? newId = newChatName.replace(/\s/g, '') : newId = newChatName;        
 
-  const onAddMessage = (newMessage, chatId) => {
-    dispatch(addMessageWithReply(newMessage, chatId))
-  }
+        chats?.forEach(chat => {
+            if (chat.id === newId) {
+               newId = `chat-${Date.now()}`;
+            }
+        });
 
-  const onDeleteMessage = (event) => {
-    const messageToDelete = messages[chatId].find(message => message.id === event.target.name);
-    dispatch(deleteMessage(messageToDelete,chatId));
-  }
-  const handleSubmit = (text) => {
-    const newMessage = {text:text, author: userName,id: `msg-${Date.now()}`};
-    onAddMessage(newMessage, chatId);
-  }
+        dispatch(addChat({ name: newChatName, id: newId }));
+    };
 
-  useEffect(() => {
-    if (messages[chatId].length == 0) {
-      onAddMessage({text:`Hello! This is bot from ${chatName}! Text me!`, author: "Bot",id: `msg-${Date.now()}`}, chatId)
-    }
-  })
-
-  if (!messages[chatId]) {
-    return <Navigate to="/chats" replace />;
-  }
-  return (
-    <div className='App_messenger'>
-        <MessageList userName={userName} messages = {messages[chatId]} chatName={chatName} onDeleteMessage={onDeleteMessage}/>
-        <Form onSubmit={handleSubmit} text="Введите сообщение" btnText="Отправить"/>
-    </div>
-  );
+    const onDeleteChat = (event) => {
+        const chatToDelete = chats.find(chat => chat.id === event.target.name);
+        dispatch(deleteChat(chatToDelete));
+        window.history.pushState({}, undefined, "/chats");
+        window.location.reload();
+    };
+    
+    return (
+        <div className='container'>
+            <div className='App'>
+                <ChatList chats={chats} onDeleteChat={onDeleteChat} onAddChat={onAddChat} />
+                <Outlet/>
+            </div>
+        </div>
+    ) 
 }
 
 export default Chats;
